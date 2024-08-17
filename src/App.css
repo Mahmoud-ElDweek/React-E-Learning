@@ -1,0 +1,20 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: #333; */
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.mycontainer{
+  max-width: 95%;
+  margin: auto;
+
+}
+
+.small-text {
+  font-size: 13px;
+}
