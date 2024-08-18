@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import './NavBar.css'
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLang } from "../../ReduxToolkit/Slices/Localization";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-
+  const dispatch = useDispatch()
+  const translate = useSelector((state) => state.Localization.translation);
+  const translateToAR = () => {
+    dispatch(setLang("ar"))
+  }
+  const translateToEN = () => {
+    dispatch(setLang("en"))
+  }
   return (
     <div className={menuToggle ? "nav-holder" : ""}>
       <nav id="navbar" className={menuToggle ? "menu-open" : ""}>
@@ -12,10 +22,22 @@ const Navbar = () => {
             <a href="#home"><i className="fas fa-chess-knight"></i> Logo</a>
           </div>
           <ul id="menu" className={menuToggle ? "active" : ""}>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li>
+              <NavLink to="/">{translate.home}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/courses">Courses</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">{translate.about}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">{translate.contact}</NavLink>
+            </li>
+            <li>
+              <button onClick={() => translateToAR()}>AR</button>
+              <button onClick={() => translateToEN()}>EN</button>
+            </li>
           </ul>
         </div>
       </nav>
@@ -27,10 +49,18 @@ const Navbar = () => {
 
       <div className={`overlay-menu ${menuToggle ? "active" : ""}`}>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="#services">Services</NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+          <li>
+            <NavLink to="#contact">Contact</NavLink>
+          </li>
         </ul>
       </div>
     </div>

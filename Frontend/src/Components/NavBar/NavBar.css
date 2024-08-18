@@ -1,12 +1,12 @@
 #navbar {
     background: #eee;
     color: rgb(13, 26, 38);
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     height: 60px;
     line-height: 60px;
     width: 100%;
-    z-index: 12;
+    z-index: 10;
   }
   
   .nav-wrapper {
@@ -78,9 +78,15 @@
     transition: all 1s ease;
     -webkit-transition: all 1s ease;
   }
+  #navbar li a.active {
+    background-color: #004d4d;
+  }
   
   /* Animated Bottom Line */
-  #navbar li a:before, #navbar li a:after {
+  #navbar li a:before,
+  #navbar li a:after,
+  .overlay-menu li a:before,
+  .overlay-menu li a:after {
     content: '';
     position: absolute;
     width: 0%;
@@ -89,24 +95,28 @@
     background: rgb(13, 26, 38);
   }
   
-  #navbar li a:before {
+  #navbar li a:before,
+  .overlay-menu li a:before {
     left: 0;
     transition: 0.5s;
   }
   
-  #navbar li a:after {
+  #navbar li a:after,
+  .overlay-menu li a:after {
     background: rgb(13, 26, 38);
     right: 0;
     /* transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1); */
   }
   
-  #navbar li a:hover:before {
+  #navbar li a:hover:before,
+  .overlay-menu li a:hover:before {
     background: rgb(13, 26, 38);
     width: 100%;
     transition: width 0.5s cubic-bezier((0.22, 0.61, 0.36, 1));
   }
   
-  #navbar li a:hover:after {
+  #navbar li a:hover:after,
+  .overlay-menu li a:hover:after {
     background: transparent;
     width: 100%;
     /* transition: 0s; */
@@ -265,11 +275,9 @@
         color: rgb(13, 26, 38);
         display: flex;
         align-items: center;
-        justify-content: center;
         position: absolute;
         top: 0;
         /* right: 0; */
-        padding-right: 15px;
         transform: translateX(-100%); /* Initially off-screen */
         width: 70vw;
         height: 100vh;
@@ -292,22 +300,28 @@
       .overlay-menu ul, .overlay-menu li {
         display: block; /* Ensure links are displayed as block */
         position: relative;
+        padding: 0;
+        width: 100%;
+   
       }
       
       .overlay-menu li a {
         display: block;
         font-size: 1.8em;
         letter-spacing: 4px;
-        padding: 10px 0;
-        text-align: right;
+        padding: 10px;
         text-transform: uppercase;
         color: rgb(13, 26, 38); /* Ensure the links are visible */
         transition: color 0.3s ease;
+        text-decoration: none;
+        margin-bottom: 10px;
       }
       
       .overlay-menu li a:hover,
       .overlay-menu li a:active {
         color: rgb(28, 121, 184); /* Change color on hover */
       }
-      
+      .overlay-menu li a.active {
+        background-color: #004d4d;
+      }
     }
