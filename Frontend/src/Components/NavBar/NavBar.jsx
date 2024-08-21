@@ -1,65 +1,89 @@
 import React, { useState } from "react";
 import './NavBar.css'
-import { NavLink } from "react-router-dom";
+import { Button } from '@mui/material'
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setLang } from "../../ReduxToolkit/Slices/Localization";
+import { setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
+import { useTheme } from '@mui/material/styles';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
-const Navbar = () => {
+
+
+// eslint-disable-next-line react/prop-types
+const Navbar = ({ toggleTheme }) => {
   const [menuToggle, setMenuToggle] = useState(false);
   const dispatch = useDispatch()
   const translate = useSelector((state) => state.Localization.translation);
+  const [navAr , setNavAR] = useState(false)
   const translateToAR = () => {
     dispatch(setLang("ar"))
+    dispatch(setDirection("rtl"))
+     setNavAR(true)
   }
   const translateToEN = () => {
     dispatch(setLang("en"))
+    dispatch(setDirection("ltr"))
+    setNavAR(false)
   }
+  const theme = useTheme();
+
   return (
-    <div className={menuToggle ? "nav-holder" : ""}>
+    <div className={menuToggle ? "nav-holder" : ""} style={{ backgroundColor: theme.palette.background.bg, color: theme.palette.background.text }}>
       <nav id="navbar" className={menuToggle ? "menu-open" : ""}>
         <div className="nav-wrapper">
           <div className="logo">
-            <a href="#home"><i className="fas fa-chess-knight"></i> Logo</a>
+            <Link style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/">E-Learning</Link>
           </div>
           <ul id="menu" className={menuToggle ? "active" : ""}>
             <li>
-              <NavLink to="/">{translate.home}</NavLink>
+              <NavLink style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/">{translate.home}</NavLink>
             </li>
             <li>
-              <NavLink to="/courses">Courses</NavLink>
+              <NavLink style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/courses">{translate.courses}</NavLink>
             </li>
             <li>
-              <NavLink to="/about">{translate.about}</NavLink>
+              <NavLink style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/about">{translate.about}</NavLink>
             </li>
             <li>
-              <NavLink to="/contact">{translate.contact}</NavLink>
-            </li>
-            <li>
-              <button onClick={() => translateToAR()}>AR</button>
-              <button onClick={() => translateToEN()}>EN</button>
+              <NavLink style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/contact">{translate.contact}</NavLink>
             </li>
           </ul>
+          <div className="signin">
+            <div>
+              <Button onClick={toggleTheme} color="inherit" >
+                <DarkModeIcon />
+              </Button>
+              <Button color="inherit" onClick={() => translateToAR()}>AR</Button>
+              <Button color="inherit" onClick={() => translateToEN()}>EN</Button>
+              <Button sx={{ display: { xs: 'none', sm: 'inline-block' } }} color="inherit">
+                <Link to='/signin' style={{ textDecoration: 'none', color: theme.palette.background.text }}>{translate.signin}</Link>
+              </Button>
+            </div>
+          </div>
+          <div className={`menuIcon ${menuToggle ? "toggle" : ""}`} onClick={() => setMenuToggle(!menuToggle)}>
+            <span className="icon icon-bars"></span>
+            <span className="icon icon-bars overlay"></span>
+          </div>
         </div>
       </nav>
 
-      <div className={`menuIcon ${menuToggle ? "toggle" : ""}`} onClick={() => setMenuToggle(!menuToggle)}>
-        <span className="icon icon-bars"></span>
-        <span className="icon icon-bars overlay"></span>
-      </div>
 
-      <div className={`overlay-menu ${menuToggle ? "active" : ""}`}>
+      <div className={`overlay-menu ${menuToggle ? "active" : ""} ${navAr ? "arNav" : ""}`}>
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">{translate.home}</NavLink>
           </li>
           <li>
-            <NavLink to="#services">Services</NavLink>
+            <NavLink to="/courses">{translate.courses}</NavLink>
           </li>
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about">{translate.about}</NavLink>
           </li>
           <li>
-            <NavLink to="#contact">Contact</NavLink>
+            <NavLink to="/contact">{translate.contact}</NavLink>
+          </li>
+          <li>
+            <NavLink to="/signin">{translate.signin}</NavLink>
           </li>
         </ul>
       </div>

@@ -11,6 +11,7 @@ const translation = {
 
 const INITIAL_STATE = {
     Lang: "EN",
+    direction: "ltr",
     translation: translation['en']
 }
 
@@ -22,10 +23,14 @@ const Localization = createSlice({
         setLang(state,action) {
             state.Lang = action.payload;
             state.translation = translation[action.payload]
+        },
+        setDirection (state,action) {
+            state.direction = action.payload;
         }
     }
 })
 
 export const {setLang} = Localization.actions;
+export const {setDirection} = Localization.actions;
 
 export default Localization.reducer;
