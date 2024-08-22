@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import './NavBar.css'
-import { Button } from '@mui/material'
+import { Box, Button, colors } from '@mui/material'
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
 import { useTheme } from '@mui/material/styles';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -32,7 +33,10 @@ const Navbar = ({ toggleTheme }) => {
       <nav id="navbar" className={menuToggle ? "menu-open" : ""}>
         <div className="nav-wrapper">
           <div className="logo">
-            <Link style={{ textDecoration: 'none', color: theme.palette.background.text }} to="/">E-Learning</Link>
+            <Link style={{ textDecoration: 'none', color: theme.palette.background.text,alignSelf: "center", display: "flex", alignItems: "center",height: "100%" }} to="/">
+            <img src="/src/assets/Images/LogoIconWhite.png" className="logoIcon" alt="" />
+            <img src="/src/assets/Images/E-LearningLogoWhite.png" className="logoImg" alt="" />
+            </Link>
           </div>
           <ul id="menu" className={menuToggle ? "active" : ""}>
             <li>
@@ -68,9 +72,16 @@ const Navbar = ({ toggleTheme }) => {
       </nav>
 
 
-      <div className={`overlay-menu ${menuToggle ? "active" : ""} ${navAr ? "arNav" : ""}`}>
+      <div className={`overlay-menu ${menuToggle ? "active" : ""} ${navAr ? "arNav" : "enNav"}`}>
         <ul>
-          <li>
+        <Box sx={{display: "flex", justifyContent:"start",alignItems: "center" ,width: "100%", margin: "25px 0"}}>
+        <CloseIcon sx={{color: "black",fontSize: "30px" ,cursor: "pointer" ,backgroundColor: "#999" , padding: "4px",margin: "0 10px", borderRadius: "50%" , ":hover":{backgroundColor:"#333", color: "white"}}} onClick={() => setMenuToggle(!menuToggle)}/>
+          <div>
+        <img src="/src/assets/Images/LogoIconBlack.png" style={{maxWidth: "32px"}} alt="" />
+        <img src="/src/assets/Images/E-LearningLogoBlack.png" style={{maxWidth: "150px"}} alt="" />
+          </div>
+        </Box>
+          <li> 
             <NavLink to="/">{translate.home}</NavLink>
           </li>
           <li>
