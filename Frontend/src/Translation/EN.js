@@ -7,6 +7,11 @@ const EN = {
     signin: "Sign in",
     register: "Register",
     homeTitle: "Home Title",
+    //---Dashboard---
+    dashboard: "Dashboard",
+    adminCourses: "Course Management",
+    adminUsers: "Users",
+    adminInstructors: "Instructors",
 }
 
 

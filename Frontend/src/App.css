@@ -18,3 +18,14 @@ body {
 .small-text {
   font-size: 13px;
 }
+
+#APP {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#main {
+  flex: 1;
+  width: 95%;
+  margin: 0 auto;
+}

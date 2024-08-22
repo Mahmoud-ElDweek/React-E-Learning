@@ -342,44 +342,35 @@
 .overlay-menu li {
   display: none;
   position: relative;
+  padding: 0;
 }
 
 @media (max-width: 992px) {
 
   .overlay-menu.enNav {
     background: #eee;
-    /* color: rgb(13, 26, 38); */
     display: flex;
     flex-direction: column;
-    align-items: center;
     position: fixed;
     top: 0;
-    /* right: 0; */
     transform: translateX(-100%);
-    /* Initially off-screen */
     width: 70vw;
     height: 100vh;
     transition: transform 0.2s ease-out;
     z-index: 10;
-    /* Ensure it's above other elements */
   }
 
   .overlay-menu.active {
     transform: translateX(0);
-    /* Move into view when active */
   }
 
   .overlay-menu.arNav {
     background: #eee;
-    /* color: rgb(13, 26, 38); */
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     position: fixed;
     top: 0;
-    /* right: 0; */
     transform: translateX(100%);
-    /* Initially off-screen */
     width: 70vw;
     height: 100vh;
     transition: transform 0.2s ease-out;
@@ -388,7 +379,6 @@
 
   .overlay-menu.arNav.active {
     transform: translateX(0);
-    /* Move into view when active */
   }
 
   .nav-holder::before {
@@ -406,11 +396,8 @@
   .overlay-menu ul,
   .overlay-menu li {
     display: block;
-    /* Ensure links are displayed as block */
     position: relative;
-    padding: 0 15px 0 15px;
     width: 100%;
-
   }
 
   .overlay-menu li a {
@@ -418,20 +405,14 @@
     color: black;
     font-size: 1.8em;
     letter-spacing: 1px;
-    padding: 10px;
+    padding: 10px 30px;
     text-transform: uppercase;
-    /* color: rgb(13, 26, 38); Ensure the links are visible */
     transition: color 0.3s ease;
     text-decoration: none;
     margin-bottom: 10px;
   }
 
-  .overlay-menu li a:hover,
-  .overlay-menu li a:active {
-    /* color: rgb(28, 121, 184); Change color on hover */
-  }
-
   .overlay-menu li a.active {
-    /* background-color: #004d4d; */
+    background-color: #999;
   }
 }

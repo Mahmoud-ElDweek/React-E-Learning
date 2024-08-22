@@ -10,7 +10,7 @@ const translation = {
 
 
 const INITIAL_STATE = {
-    Lang: "EN",
+    Lang: "en",
     direction: "ltr",
     translation: translation['en']
 }
