@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Components/NavBar/NavBar';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import About from './Pages/About/About';
 import Courses from './Pages/Courses/Courses';
@@ -27,6 +27,7 @@ const lightTheme = createTheme({
     },
     background: {
       bg: '#1976d2',
+      contentBG: "#eee",
       navText: '#ffffff',
       contentText: '#000000'
     },
@@ -41,6 +42,7 @@ const darkTheme = createTheme({
     },
     background: {
       bg: '#000000',
+      contentBG: "#212529",
       navText: '#ffffff',
       contentText: '#ffffff',
     },
@@ -59,7 +61,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div id='APP' dir={directions} style={{ backgroundColor: theme.palette.background.default }}>
+      <div id='APP' dir={directions} style={{ backgroundColor: theme.palette.background.contentBG }}>
         <BrowserRouter>
 
           <Navbar toggleTheme={toggleTheme} />
@@ -72,7 +74,8 @@ function App() {
               <Route path='/contact' element={<Contact />} />
               <Route path='/signin' element={<SignIn />} />
               <Route path="/admin" element={<Admin />}>
-                <Route index element={<Dashboard />} />
+                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route path="dashboard" element={<Dashboard />} />
                 <Route path="courses" element={<CoursesManagement />} />
                 <Route path="courses/add" element={<CourseForm />} />
                 <Route path="courses/edit/:id" element={<CourseForm />} />
@@ -88,7 +91,7 @@ function App() {
           </div>
 
           <FooterBar />
-          
+
         </BrowserRouter>
       </div>
     </ThemeProvider>
