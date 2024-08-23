@@ -12,6 +12,7 @@ const EN = {
     adminCourses: "Course Management",
     adminUsers: "Users",
     adminInstructors: "Instructors",
+    coursesHeading : "Best Cost"
 }
 
 
