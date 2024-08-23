@@ -3,7 +3,7 @@
   top: 0;
   height: 60px;
   line-height: 60px;
-  border-bottom: 1px solid #999;
+  /* border-bottom: 1px solid #999; */
   z-index: 10;
 }
 
@@ -93,7 +93,7 @@
 }
 
 #navbar li a.active {
-  background-color: #464444;
+  background-color: #212529;
 }
 
 /* Animated Bottom Line */
@@ -413,6 +413,6 @@
   }
 
   .overlay-menu li a.active {
-    background-color: #999;
+    background-color: #212529;
   }
 }

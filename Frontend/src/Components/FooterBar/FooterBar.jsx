@@ -6,7 +6,7 @@ const FooterBar = () => {
 
   return (
     <>
-    <div style={{ backgroundColor: theme.palette.background.bg, color: theme.palette.background.navText ,textAlign: "center", padding: "8px", borderTop: "1px solid #999" }}>
+    <div style={{ backgroundColor: theme.palette.background.bg, color: theme.palette.background.navText ,textAlign: "center", padding: "8px" }}>
       Footer
     </div>
     </>
