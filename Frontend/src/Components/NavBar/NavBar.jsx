@@ -102,17 +102,7 @@ const handleCancelLogout = () => {
                   </Badge>
                 </Fab>
               </Link>
-              <Button sx={{ display: { xs: 'none', sm: 'inline-block' }, border: "1px solid #eee",padding: "4px 16px",  }} color="inherit">
-                <Link to='/signin' style={{ textDecoration: 'none', color: theme.palette.background.navText }}>{translate.signin}</Link>
-              </Button>
-            </div>
-          </div>
-          <div className={`menuIcon ${menuToggle ? "toggle" : ""}`} onClick={() => setMenuToggle(!menuToggle)}>
-            <span className="icon icon-bars"></span>
-            <span className="icon icon-bars overlay"></span>
-          </div>
-        </div>
-        {!isLoggedIn ? (
+              {!isLoggedIn ? (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">Login</Link>
@@ -143,6 +133,14 @@ const handleCancelLogout = () => {
           onCancel={handleCancelLogout}
         />
       )}
+
+            </div>
+          </div>
+          <div className={`menuIcon ${menuToggle ? "toggle" : ""}`} onClick={() => setMenuToggle(!menuToggle)}>
+            <span className="icon icon-bars"></span>
+            <span className="icon icon-bars overlay"></span>
+          </div>
+        </div>
 
       </nav>
 

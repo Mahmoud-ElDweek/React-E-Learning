@@ -132,7 +132,7 @@ export default function CourseDetails() {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                {translate.buyNow}
+                {translate.BuyNow}
               </Button>
               <Typography
                 variant="body2"

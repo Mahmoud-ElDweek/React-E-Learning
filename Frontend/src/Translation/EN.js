@@ -21,6 +21,16 @@ const EN = {
   BuyNow: "Buy now",
   dayMoneyBackGuarantee: "30-Day Money-Back Guarantee",
   thisCourseInclude: "This course include",
+  email:"Email Address",
+  name:"Name",
+  userName:"User Name",
+  password:"Password",
+  confirmPassword:"Confirm Password",
+  register:"Register",
+  ifYouHaveAccount:"if you have an account ? login here",
+  login:"Login",
+  show:"Show",
+  donotHaveAccount:"DO Not Have An Account? Register Here"
 };
 
 

@@ -21,7 +21,17 @@ const AR = {
   addToCart: "اضافة الى السلة",
   BuyNow: "اشتري الان",
   dayMoneyBackGuarantee: "الاسترجاع خلال30 يوم",
-  thisCourseInclude:"هذا الكورس يتضمن"
+  thisCourseInclude:"هذا الكورس يتضمن",
+  email:"البريد الالكتروني ",
+  name:"الاسم",
+  userName:"اسم المستخدم",
+  password:"كلمة المرور",
+  confirmPassword:"تأكيد كلمة المرور",
+  register:"تسجيل",
+  ifYouHaveAccount:"اذا كان لديك حساب ؟ تسجيل الدخول من هنا",
+  login:"تسجيل الدخول",
+  show:"عرض",
+  donotHaveAccount:"اذا كنت غير مسجل بحساب ؟ عليك التسجيل من هنا"
 };
 
 export default AR;

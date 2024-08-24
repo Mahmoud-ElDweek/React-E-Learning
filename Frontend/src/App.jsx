@@ -88,7 +88,7 @@ function App() {
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetails />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+              <Route path="/login" element={<Login onLogin={handleLogin} />} />
               <Route path="/register" element={<Register />} />
               <Route path="/admin" element={<Admin />}>
                 <Route index element={<Navigate to="dashboard" replace />} />
