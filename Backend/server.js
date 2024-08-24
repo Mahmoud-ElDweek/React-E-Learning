@@ -21,9 +21,11 @@ app.use(router);
 
 app.listen(port, () => {
   console.log(`
-    Server is running on port: http://localhost:${port}
+    Server is running on port:
+    BaseURL>>  http://localhost:${port}
     End Points Is:
-    http://localhost:${port}/courses
-    http://localhost:${port}/arCourses
-    http://localhost:${port}/users`);
+    engCourses >> http://localhost:${port}/courses
+    arCourses >> http://localhost:${port}/arCourses
+    Users >> http://localhost:${port}/users
+    `);
 });

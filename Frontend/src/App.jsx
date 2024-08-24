@@ -83,7 +83,7 @@ function App() {
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="courses" element={<CoursesManagement />} />
-                <Route path="courses/add" element={<CourseForm />} />
+                <Route path="courses/addcourse" element={<CourseForm />} />
                 <Route path="courses/edit/:id" element={<CourseForm />} />
                 <Route path="users" element={<UsersManagement />} />
                 <Route path="instructors" element={<InstructorsManagement />} />

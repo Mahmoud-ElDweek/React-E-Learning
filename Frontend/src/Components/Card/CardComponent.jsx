@@ -12,24 +12,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types'
 
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}))
+
+const truncate = {
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    height: 'calc(3 * 1.22em)',
+    lineHeight: '1.2em',
+  };
 
 const CardComponent = ({ instPic, instName, subheader, media, courseTitle, content, actions }) => {
 
-    const [expanded, setExpanded] = useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
 
     return (
@@ -38,10 +33,9 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                 {(instPic || instName || subheader) && (
                     <CardHeader sx={{ height: "80px" }}
                         avatar={instPic &&
-                            <img src={instPic} alt="Avatar" style={{ borderRadius: "50%" }} />
+                            <img src={instPic} alt="Avatar" style={{ borderRadius: "50%", marginLeft: "16px" }} />
                         }
                         title={instName || ''}
-                    // subheader={subheader || ''}
                     />
                 )}
                 {media && (
@@ -53,11 +47,11 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                     />
                 )}
                 {(content || courseTitle) && (
-                    <CardContent sx={{ cursor: "pointer", height: "80px" }}>
+                    <CardContent sx={{ cursor: "pointer", height: "110px" }}>
                         <Typography color="primary" sx={{ fontWeight: "900" }}>
                             {courseTitle}
                         </Typography>
-                        <Typography variant="body2" color="primary">
+                        <Typography variant="body2" color="grey" sx={truncate}>
                             {content}
                         </Typography>
                     </CardContent>
@@ -69,24 +63,10 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                                 {action.icon}
                             </IconButton>
                         ))}
-                        {/* <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                        >
-                            <ExpandMoreIcon />
-                        </ExpandMore> */}
+                     
                     </CardActions>
                 )}
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph>Method:</Typography>
-                        <Typography paragraph>
-                            Additional content can go here.
-                        </Typography>
-                    </CardContent>
-                </Collapse>
+             
             </Card>
         </>
     )

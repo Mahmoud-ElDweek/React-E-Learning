@@ -4,8 +4,11 @@ import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
-import { Box, Pagination } from '@mui/material';
+import { Box, Button, Pagination } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import CourseList from '../../../Components/Search/Search';
+import { stripHtmlTags } from '../../../util/HtmlCleaner';
 
 
 const CoursesManagement = () => {
@@ -34,8 +37,14 @@ const CoursesManagement = () => {
     setPage(page);
   };
 
+  const navigate = useNavigate();
 
-  const editCourse = (CourseID) => {
+  const addNewCourse = () => {
+    navigate(`/admin/courses/addcourse`)
+  }
+
+  const editCourse = (id) => {
+    navigate(`/admin/courses/edit/${id}`);
 
   }
 
@@ -48,10 +57,16 @@ const CoursesManagement = () => {
     }
     deletingCourse()
   }
+
+
+
   return (
     <>
-      <Grid container spacing={2}>
+      <Button sx={{fontSize: "20px", fontWeight: "900", border: "1px solid #1976d2"}} onClick={()=> addNewCourse()}>Add New Course</Button>
+      <CourseList />
 
+
+      <Grid container spacing={2}>
 
         {courses && courses.map((course) => (
           <Grid item xs={12} sm={12} md={6} lg={4} key={course.id}>
@@ -61,7 +76,7 @@ const CoursesManagement = () => {
               // subheader="September 14, 2016"
               media={course.image}
               courseTitle={course.title}
-              // content={course.description}
+              content={stripHtmlTags(course.description)}
               actions={[
                 { label: 'Edit', icon: <EditIcon color='info' />, handleFunction: () => editCourse(course.id)},
                 { label: 'Delete', icon: <DeleteIcon color='error' />, handleFunction: () => deleteCourse(course.id) },

@@ -5,20 +5,29 @@ import SearchIcon from "@mui/icons-material/Search";
 import CardComponent from './../Card/CardComponent';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import { useSelector } from "react-redux";
+
+
+
+
+
 export default function CourseList() {
+
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
+
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     if (word) {
       axios
-        .get(`http://localhost:3001/courses?title_like=${word}`)
+        .get(`${baseApiUrl}?title_like=${word}`)
         .then((res) => setCourses(res.data))
         .catch((err) => console.error(err));
     } else {
       setCourses([]);
     }
-  }, [word]);
+  }, [word,baseApiUrl]);
 
   return (
     <Box sx={{ padding: "20px" }}>
@@ -54,7 +63,7 @@ export default function CourseList() {
       />
       <Grid container spacing={2}>
         {courses.map((course) => (
-          <Grid item key={course.id} xs={12} sm={12} md={6} lg={4}>
+          <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
             <CardComponent
               instPic={course.visible_instructors[0].image_50x50}
               instName={course.visible_instructors[0].display_name}

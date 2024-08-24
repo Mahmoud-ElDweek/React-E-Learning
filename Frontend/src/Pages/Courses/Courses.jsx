@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import Search from "../../Components/Search/Search"
 import { useSelector } from "react-redux";
+import { stripHtmlTags } from "../../util/HtmlCleaner";
 
 function CourseList() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
@@ -52,7 +53,7 @@ function CourseList() {
                 // subheader="September 14, 2016"
                 media={course.image}
                 courseTitle={course.title}
-                // content   --> description
+                content={stripHtmlTags(course.description)}
                 actions={[
                   { label: "add to favorites", icon: <FavoriteIcon color="error" /> , handleFunction: addToFavorite },
                   { label: "share", icon: <ShareIcon color="info" /> },
