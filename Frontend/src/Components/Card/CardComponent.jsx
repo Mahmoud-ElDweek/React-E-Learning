@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types'
+import { Box, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 
@@ -21,9 +23,9 @@ const truncate = {
     textOverflow: 'ellipsis',
     height: 'calc(3 * 1.22em)',
     lineHeight: '1.2em',
-  };
+};
 
-const CardComponent = ({ instPic, instName, subheader, media, courseTitle, content, actions }) => {
+const CardComponent = ({ instPic, instName, subheader, media, courseTitle, content, actions, CourseID }) => {
 
 
 
@@ -57,16 +59,22 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                     </CardContent>
                 )}
                 {actions && (
-                    <CardActions disableSpacing sx={{ justifyContent: "space-evenly"}}>
+                    <CardActions disableSpacing sx={{ justifyContent: "space-evenly" }}>
                         {actions.map((action, index) => (
-                            <IconButton  key={index} aria-label={action.label} onClick={action.handleFunction}>
+                            <IconButton key={index} aria-label={action.label} onClick={action.handleFunction}>
                                 {action.icon}
                             </IconButton>
                         ))}
-                     
                     </CardActions>
                 )}
-             
+                {CourseID &&
+                    <Box mt={1}>
+                        <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
+                            <Button variant="contained" fullWidth>Learn More</Button>
+                        </Link>
+                    </Box>
+                }
+
             </Card>
         </>
     )
@@ -80,6 +88,7 @@ CardComponent.propTypes = {
     content: PropTypes.string,
     actions: PropTypes.array,
     iconColor: PropTypes.string,
+    CourseID: PropTypes.number,
 };
 
 export default CardComponent;

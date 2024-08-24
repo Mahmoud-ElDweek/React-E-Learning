@@ -66,12 +66,9 @@ function CourseList() {
                   { label: "add to favorites", icon: <FavoriteIcon color="error" /> , handleFunction: addToFavorite },
                   { label: "share", icon: <ShareIcon color="info" /> },
                 ]}
+                CourseID={course.id}
               />
-              <Box mt={2}>
-                <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                  <Button variant="contained" fullWidth>Learn More</Button>
-                </Link>
-              </Box>
+              
             </Grid>
           ))}
         </Grid>

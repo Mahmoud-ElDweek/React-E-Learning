@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CourseList from '../../../Components/Search/Search';
 import { stripHtmlTags } from '../../../util/HtmlCleaner';
+// import DraggableDialog from '../../../Components/Confirm/Confirm';
 
 
 const CoursesManagement = () => {
@@ -49,6 +50,7 @@ const CoursesManagement = () => {
   }
 
   const deleteCourse = (CourseID) => {
+    // <DraggableDialog />
     const deletingCourse = async () => {
       const res = await axios.delete(`http://localhost:3001/courses/${CourseID}`)
               setCourses((prevCourses) => prevCourses.filter(course => course.id !== CourseID));

@@ -22,18 +22,19 @@ import CheckIcon from "@mui/icons-material/Check";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useSelector } from "react-redux";
+import { stripHtmlTags } from "../../util/HtmlCleaner";
 
 export default function CourseDetails() {
   const [course, setCourse] = useState(null);
   const { id } = useParams();
   const translate = useSelector((state) => state.Localization.translation);
-
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl)
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/courses/${id}`)
+      .get(`${baseApiUrl}/${id}`)
       .then((res) => setCourse(res.data))
       .catch((err) => console.error("Error fetching course details:", err));
-  }, [id]);
+  }, [id , baseApiUrl]);
 
   if (!course) {
     return <Typography>Loading...</Typography>;
@@ -56,7 +57,7 @@ export default function CourseDetails() {
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <Chip
               label={course.rating?.toFixed(1)}
-              icon={<StarIcon sx={{ color: "gold" }} />}
+              icon={<StarIcon color="warning" />}
               sx={{ mr: 1, fontWeight: "bold" }}
             />
             <Typography variant="body2" color="text.secondary">
@@ -88,7 +89,7 @@ export default function CourseDetails() {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
               {translate.description}
             </Typography>
-            {/* {course.description} */}
+            {stripHtmlTags(course.description)}
           </Box>
           <Divider sx={{ my: 4 }} />
           <Box>
