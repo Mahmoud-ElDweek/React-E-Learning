@@ -83,7 +83,7 @@ const Login = ({ onLogin }) => {
         </Formik>
         <div className="text-center mt-3">
           <button className="btn btn-link" onClick={() => navigate('/register')}>
-            Don't have an account? Register here
+            Dont have an account? Register here
           </button>
         </div>
       </div>

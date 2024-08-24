@@ -9,10 +9,30 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CloseIcon from '@mui/icons-material/Close';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog' // Import the ConfirmDialog component
 
 
 // eslint-disable-next-line react/prop-types
-const Navbar = ({ toggleTheme }) => {
+const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
+
+//-------
+const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+const handleLogoutClick = () => {
+  setShowConfirmDialog(true);
+};
+
+const handleConfirmLogout = () => {
+  setShowConfirmDialog(false);
+  sessionStorage.removeItem('isLoggedIn'); // Remove logged in status
+  handleLogout(); // Call the logout function passed as a prop
+};
+
+const handleCancelLogout = () => {
+  setShowConfirmDialog(false);
+};
+
+//-------
 
   const [menuToggle, setMenuToggle] = useState(false);
   const dispatch = useDispatch()
@@ -92,6 +112,38 @@ const Navbar = ({ toggleTheme }) => {
             <span className="icon icon-bars overlay"></span>
           </div>
         </div>
+        {!isLoggedIn ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Login</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">Register</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <button className="btn btn-link nav-link" onClick={handleLogoutClick}>
+                    Logout
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/settings">
+                    Settings
+                  </Link>
+                </li>
+              </>
+            )}
+
+        {showConfirmDialog && (
+        <ConfirmDialog
+          message="Are you sure you want to log out?"
+          onConfirm={handleConfirmLogout}
+          onCancel={handleCancelLogout}
+        />
+      )}
+
       </nav>
 
 

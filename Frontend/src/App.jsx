@@ -19,6 +19,8 @@ import InstructorsManagement from './Pages/Admin/InstructorsManagement/Instructo
 import Err404 from './Pages/Err404/Err404';
 import FooterBar from './Components/FooterBar/FooterBar';
 import CourseDetails from './Components/CourseDetails/CourseDetails';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 
 const lightTheme = createTheme({
   palette: {
@@ -65,12 +67,19 @@ function App() {
 
   const directions = useSelector((state) => state.Localization.direction);
 
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Update the login state
+  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => setIsLoggedIn(false);
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div id='APP' dir={directions} style={{ backgroundColor: theme.palette.background.contentBG }}>
         <BrowserRouter>
-          <Navbar toggleTheme={toggleTheme} />
+          <Navbar toggleTheme={toggleTheme} isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
 
           <div id="main">
             <Routes>
@@ -79,7 +88,8 @@ function App() {
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetails />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/admin" element={<Admin />}>
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
