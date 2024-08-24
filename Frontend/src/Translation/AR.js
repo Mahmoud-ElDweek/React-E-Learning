@@ -14,6 +14,14 @@ const AR = {
   adminUsers: "الأعضاء المشتريكين",
   adminInstructors: "المدربين",
   coursesHeading: "افضل الدورات التدريبية",
+  search: " البحث عن الدورات التدريبية",
+  whatYouWillLearn: "ماذا سوف تتعلم",
+  description: "الوصف",
+  requirements: "المتطلبات",
+  addToCart: "اضافة الى السلة",
+  BuyNow: "اشتري الان",
+  dayMoneyBackGuarantee: "الاسترجاع خلال30 يوم",
+  thisCourseInclude:"هذا الكورس يتضمن"
 };
 
 export default AR;

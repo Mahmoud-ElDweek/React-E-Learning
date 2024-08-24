@@ -17,6 +17,7 @@ export default function CourseList() {
 
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
+  const translate = useSelector((state) => state.Localization.translation);
 
   useEffect(() => {
     if (word) {
@@ -32,7 +33,7 @@ export default function CourseList() {
   return (
     <Box sx={{ padding: "20px" }}>
       <TextField
-        label="Search for courses"
+        label={translate.search}
         value={word}
         onChange={(e) => setWord(e.target.value)}
         variant="outlined"
