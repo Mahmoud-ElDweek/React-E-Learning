@@ -1,26 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import CardComponent from '../../../Components/Card/CardComponent'
 import axios from 'axios';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
+import { Box, Pagination } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 const CoursesManagement = () => {
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   const [courses, setCourses] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 15;
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const res = await axios.get(`http://localhost:3001/courses`)
-      const CoursesData = res.data
-      console.log(CoursesData);
+    axios
+    .get(`${baseApiUrl}?_page=${page}&_limit=${pageSize}`)
+    .then((res) => {
+        setCourses(res.data);
+        const totalCourses = parseInt(res.headers["x-total-count"], 10);
+        setTotalPages(Math.ceil(totalCourses / pageSize));
+      })
+      .catch((err) => {
+        console.error("Error ", err);
+      });
+  }, [page,baseApiUrl]);
 
-      setCourses(CoursesData)
+  const handlePageChange = (event, page) => {
+    // console.log(page)
+    setPage(page);
+  };
+
+
+  const editCourse = (CourseID) => {
+
+  }
+
+  const deleteCourse = (CourseID) => {
+    const deletingCourse = async () => {
+      const res = await axios.delete(`http://localhost:3001/courses/${CourseID}`)
+              setCourses((prevCourses) => prevCourses.filter(course => course.id !== CourseID));
+      console.log(CourseID);
+      
     }
-    fetchCourses()
-  }, [])
-
+    deletingCourse()
+  }
   return (
     <>
       <Grid container spacing={2}>
@@ -36,8 +63,8 @@ const CoursesManagement = () => {
               courseTitle={course.title}
               // content={course.description}
               actions={[
-                { label: 'add to favorites', icon: <FavoriteIcon /> },
-                { label: 'share', icon: <ShareIcon /> }
+                { label: 'Edit', icon: <EditIcon color='info' />, handleFunction: () => editCourse(course.id)},
+                { label: 'Delete', icon: <DeleteIcon color='error' />, handleFunction: () => deleteCourse(course.id) },
               ]}
             />
 
@@ -45,6 +72,14 @@ const CoursesManagement = () => {
         ))
         }
       </Grid>
+      <Box mt={5} mb={4} display="flex" justifyContent="center">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Box>
     </>
   )
 }

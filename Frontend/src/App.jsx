@@ -32,6 +32,9 @@ const lightTheme = createTheme({
       contentText: '#000000'
     },
   },
+  typography: {
+    fontFamily: 'El Messiri, Arial, sans-serif',
+  },
 });
 
 const darkTheme = createTheme({
@@ -46,6 +49,9 @@ const darkTheme = createTheme({
       navText: '#ffffff',
       contentText: '#ffffff',
     },
+  },
+  typography: {
+    fontFamily: 'El Messiri, Arial, sans-serif',
   },
 });
 

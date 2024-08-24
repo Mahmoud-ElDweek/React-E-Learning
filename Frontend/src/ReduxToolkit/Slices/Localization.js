@@ -12,7 +12,8 @@ const translation = {
 const INITIAL_STATE = {
     Lang: "en",
     direction: "ltr",
-    translation: translation['en']
+    translation: translation['en'],
+    baseApiUrl: "http://localhost:3001/courses"
 }
 
 
@@ -26,11 +27,15 @@ const Localization = createSlice({
         },
         setDirection (state,action) {
             state.direction = action.payload;
+        },
+        setBaseApiUrl (state, action) {
+            state.baseApiUrl = action.payload;
         }
     }
 })
 
 export const {setLang} = Localization.actions;
 export const {setDirection} = Localization.actions;
+export const {setBaseApiUrl} = Localization.actions;
 
 export default Localization.reducer;

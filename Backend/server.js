@@ -24,5 +24,6 @@ app.listen(port, () => {
     Server is running on port: http://localhost:${port}
     End Points Is:
     http://localhost:${port}/courses
+    http://localhost:${port}/arCourses
     http://localhost:${port}/users`);
 });

@@ -3,7 +3,7 @@ import './NavBar.css'
 import { Badge, Box, Button, colors, Fab } from '@mui/material'
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
+import { setBaseApiUrl, setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
 import { useTheme } from '@mui/material/styles';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,11 +23,13 @@ const Navbar = ({ toggleTheme }) => {
   const translateToAR = () => {
     dispatch(setLang("ar"))
     dispatch(setDirection("rtl"))
+    dispatch(setBaseApiUrl("http://localhost:3001/arCourses"))
     setNavAR(true)
   }
   const translateToEN = () => {
     dispatch(setLang("en"))
     dispatch(setDirection("ltr"))
+    dispatch(setBaseApiUrl("http://localhost:3001/courses"))
     setNavAR(false)
   }
   const theme = useTheme();
