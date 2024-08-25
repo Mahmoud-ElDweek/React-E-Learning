@@ -6,16 +6,10 @@ import CardComponent from './../Card/CardComponent';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
+  
 
-
-
-
-
-export default function CourseList() {
-
+  export default function Search() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
-
-export default function Search() {
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
   const translate = useSelector((state) => state.Localization.translation);

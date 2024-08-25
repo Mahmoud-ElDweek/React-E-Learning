@@ -41,7 +41,8 @@ const EN = {
   FeaturedCourses: "Featured Courses",
   StartLearning: "Start Learning Today",
   Join: "Join millions of learners from around the world",
-  SignUp:"Sign Up Now"
+  SignUp: "Sign Up Now", 
+  submit:"Submit"
 };
 
 

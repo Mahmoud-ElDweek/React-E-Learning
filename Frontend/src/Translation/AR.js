@@ -35,7 +35,6 @@ const AR = {
   logSentence: 'لديك حساب مسبقا ؟ سجل الدخول من هنا',
   logout: "تسجيل الخروج",
 
-  thisCourseInclude: "هذا الكورس يتضمن",
   Category: "تصفية الدورات بالنوع",
   Schedule: "تعلم في الجدول الزمني الخاص بك",
   Choose:
@@ -44,7 +43,8 @@ const AR = {
   FeaturedCourses: "الدورات المميزة",
   StartLearning: "ابدأ التعلم اليوم", 
   Join: "انضم إلى ملايين المتعلمين من جميع أنحاء العالم سجل الآن", 
-  SignUp:"سجل الدخول الان"
+  SignUp: "سجل الدخول الان", 
+  submit:"تأكيد"
 };
 
 export default AR;

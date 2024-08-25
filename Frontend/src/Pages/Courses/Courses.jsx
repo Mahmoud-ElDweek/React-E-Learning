@@ -43,12 +43,17 @@ function CourseList() {
 
 
   return (
-    <div className="mycontainer">
+    <>
       <Search />
-      {/* <Filtering /> */}
-      <h4>{translate.coursesHeading}</h4>
-      <Box>
-        <Grid container spacing={2}>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <FilteringByCategory />
+      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={9}>
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            {translate.coursesHeading}
+          </Typography>
+          <Grid container spacing={2}>
           {courses.map((x) => (
             <Grid item key={x.id} xs={12} sm={6} md={4} lg={3}>
               <CardComponent
@@ -66,50 +71,12 @@ function CourseList() {
                 ]}
                 CourseID={x.id}
               />
-
-            </Grid>
-          ))}
-        </Grid>
-        <Box mt={5} mb={4} display="flex" justifyContent="center">
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-          />
-        </Box>
-      </Box>
-    </div>
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-        <FilteringByCategory />
-      </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={9}>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-            {translate.coursesHeading}
-          </Typography>
-          <Grid container spacing={2}>
-            {courses.map((course) => (
-              <Grid item key={course.id} xs={12} sm={6} md={4}>
-                <CardComponent
-                  instPic={course.visible_instructors[0].image_50x50}
-                  instName={course.visible_instructors[0].display_name}
-                  media={course.image}
-                  courseTitle={course.title}
-                  price={course.price_detail.amount}
-                  actions={[
-                    { label: "add to favorites", icon: <FavoriteIcon /> },
-                    { label: "share", icon: <ShareIcon /> },
-                  ]}
-                />
                 <Box mt={2}>
                   <Link
-                    to={`/courses/${course.id}`}
+                    to={`/courses/${x.id}`}
                     style={{ textDecoration: "none" }}
                   >
-                    <Button variant="contained" fullWidth>
-                      Learn More
-                    </Button>
+
                   </Link>
                 </Box>
               </Grid>
@@ -124,7 +91,7 @@ function CourseList() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12}>
           <FilteringByPrice />
         </Grid>
       </Grid>
@@ -133,3 +100,4 @@ function CourseList() {
 }
 
 export default CourseList;
+
