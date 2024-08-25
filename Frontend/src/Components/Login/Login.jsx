@@ -1,98 +1,129 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import { useSelector } from 'react-redux';
 
-// eslint-disable-next-line react/prop-types
-const Login = ({ onLogin }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-  // Retrieve translation from Redux state outside of the handleSubmit function
-  const translate = useSelector((state) => state.Localization.translation);
+export default function Login() {
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
 
-  // Validation schema using Yup
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    password: Yup.string()
-      .min(4, 'Password must be at least 4 characters')
-      .required('Password is required'),
-  });
+    const navigate = useNavigate();
 
-  // Handle form submission
-  const handleSubmit = (values) => {
-    // Retrieve users from localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // Check if the credentials match any user
-    const user = users.find(user => user.email === values.email && user.password === values.password);
 
-    if (user) {
-      console.log('Login successful');
-      localStorage.setItem('isLoggedIn', 'true'); // Set logged in status
-      onLogin(); // Notify App of successful login
-      navigate('/'); // Redirect to the home page
-    } else {
-      setErrorMessage('Invalid email or password');
+
+
+    const IsValidate = () => {
+        let isproceed = true;
+        let errormessage = 'Please enter the value in ';
+      
+        if (password === null || password === '') {
+            isproceed = false;
+            errormessage += ' Password';
+        }
+        if (email === null || email === '') {
+            isproceed = false;
+            errormessage += ' Email';
+        }
+
+        if(!isproceed){
+            toast.warning(errormessage)
+        }else{
+            if(!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)){
+                isproceed = false;
+                toast.warning('Please enter the valid email')
+            }
+        
+            
+            else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/.test(password)) {
+                    isproceed = false;
+                    toast.warning('Password must be at least 4 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character');
+                }
+        }
+        return isproceed;
     }
-  };
+
+
+
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = { password, email };
+    
+        if (IsValidate()) {
+        
+        axios.get('http://localhost:3001/users')
+            .then((res) => {
+                // console.log(res.data)
+              res.data.map((user)=>{
+                if(user.email===email){
+                    if(user.password===password){
+              toast.success('Login successfly');
+              navigate("/")
+
+                    }else{
+                        toast.warning("Wrong Password");
+                    }
+
+                }
+              })
+            })
+            .catch((err) => {
+              toast.error('Login failed Check your email and password.');
+            });
+        }
+
+    }
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4">
-        <h2 className="text-center mb-4">{translate.login}</h2>
-        {errorMessage && (
-          <div className="alert alert-danger text-center mb-3">
-            {errorMessage}
+      <div className="card p-4" style={{ width: "100%", maxWidth: "600px" }}>
+        <h2 className="text-center mb-4">Login</h2>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
+            />
           </div>
-        )}
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {() => (
-            <Form>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">{translate.email}</label>
-                <Field type="email" name="email" className="form-control" />
-                <ErrorMessage name="email" component="div" className="text-danger" />
-              </div>
 
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">{translate.password}</label>
-                <div className="input-group">
-                  <Field type={showPassword ? 'text' : 'password'} name="password" className="form-control" />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="btn btn-outline-secondary"
-                  >
-                    {showPassword ? `${translate.hide}` : `${translate.show}`}
-                  </button>
-                </div>
-                <ErrorMessage name="password" component="div" className="text-danger" />
-              </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-control"
+            />
+          </div>
 
-              <button type="submit" className="btn btn-primary w-100" >
-                {translate.login}
-              </button>
-            </Form>
-          )}
-        </Formik>
-        <div className="text-center mt-3">
-          <button className="btn btn-link" onClick={() => navigate('/register')}>
-            {translate.regSentence}
+          <button type="submit" className="btn btn-primary w-100">
+            Login
           </button>
+        </form>
+
+        <div className="text-center mt-3 text-dark">
+          <Link to="/register" className="btn btn-link text-dark">
+            If you dont have an account
+            <span className="text-decoration-underline text-primary">
+              Register here
+            </span>
+          </Link>
         </div>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

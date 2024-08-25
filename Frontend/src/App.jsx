@@ -21,6 +21,7 @@ import CourseDetails from './Components/CourseDetails/CourseDetails';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import WishList from './Components/WishList/WishList';
+import { ToastContainer } from 'react-toastify';
 
 const lightTheme = createTheme({
   palette: {
@@ -79,6 +80,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ToastContainer></ToastContainer>
       <div id='APP' dir={directions} style={{ backgroundColor: theme.palette.background.contentBG }}>
         <BrowserRouter>
           <Navbar toggleTheme={toggleTheme} isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
