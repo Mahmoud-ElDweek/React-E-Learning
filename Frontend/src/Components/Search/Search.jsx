@@ -7,6 +7,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
 
+
+
+
+
+export default function CourseList() {
+
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
+
 export default function Search() {
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
@@ -15,13 +23,13 @@ export default function Search() {
   useEffect(() => {
     if (word.length > 0) {
       axios
-        .get(`http://localhost:3001/courses/query?${word}`)
+        .get(`${baseApiUrl}?title_like=${word}`)
         .then((res) => setCourses(res.data))
         .catch((err) => console.error(err));
     } else {
       setCourses([]); 
     }
-  }, [word]);
+  }, [word,baseApiUrl]);
 
   return (
     <Box sx={{ padding: "20px" }}>

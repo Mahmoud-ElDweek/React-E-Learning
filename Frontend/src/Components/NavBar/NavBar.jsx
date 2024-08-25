@@ -1,19 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './NavBar.css'
-import { Badge, Box, Button, colors, Fab } from '@mui/material'
+import { Avatar, Badge, Box, Button, colors, Fab } from '@mui/material'
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
+import { setBaseApiUrl, setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
 import { useTheme } from '@mui/material/styles';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CloseIcon from '@mui/icons-material/Close';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog'
 
 
 // eslint-disable-next-line react/prop-types
-const Navbar = ({ toggleTheme }) => {
+const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
 
+  //-------
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const handleLogoutClick = () => {
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmLogout = () => {
+    setShowConfirmDialog(false);
+    localStorage.clear() // Remove logged in status
+    handleLogout(); // Call the logout function passed as a prop
+  };
+
+  const handleCancelLogout = () => {
+    setShowConfirmDialog(false);
+  };
+
+
+  const [userName, setUserName] = useState(() => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    return users.length ? users[users.length - 1].name : null;
+  })
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const exist = JSON.parse(localStorage.getItem('isLoggedIn')) || null;
+    const userExist = users.length ? users[users.length - 1].name : null;
+    if(exist)
+    setUserName(userExist);
+  }, []);
+
+
+  //-------
+
+  const favoriteCount = useSelector((state)=> state.wishListSlice.count);
+
+  
   const [menuToggle, setMenuToggle] = useState(false);
   const dispatch = useDispatch()
   const translate = useSelector((state) => state.Localization.translation);
@@ -23,11 +60,13 @@ const Navbar = ({ toggleTheme }) => {
   const translateToAR = () => {
     dispatch(setLang("ar"))
     dispatch(setDirection("rtl"))
+    dispatch(setBaseApiUrl("http://localhost:3001/arCourses"))
     setNavAR(true)
   }
   const translateToEN = () => {
     dispatch(setLang("en"))
     dispatch(setDirection("ltr"))
+    dispatch(setBaseApiUrl("http://localhost:3001/courses"))
     setNavAR(false)
   }
   const theme = useTheme();
@@ -75,14 +114,42 @@ const Navbar = ({ toggleTheme }) => {
               }
               <Link to="/wishlist" style={{ textDecoration: 'none', color: theme.palette.background.navText, width: "100%" }}>
                 <Fab size="small" sx={{ color: "inherit", backgroundColor: "inherit", ":hover": { backgroundColor: "#555" }, margin: "0 8px", boxShadow: "none" }}>
-                  <Badge badgeContent={5} color="error" max={9}>
+                  <Badge badgeContent={favoriteCount} color="error" max={9}>
                     <FavoriteIcon />
                   </Badge>
                 </Fab>
               </Link>
-              <Button sx={{ display: { xs: 'none', sm: 'inline-block' }, border: "1px solid #999" }} color="inherit">
-                <Link to='/signin' style={{ textDecoration: 'none', color: theme.palette.background.navText }}>{translate.signin}</Link>
-              </Button>
+              {!isLoggedIn ? (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">{translate.login}</Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <button className="btn btn-link nav-link" onClick={handleLogoutClick}>
+                      {translate.logout}
+                    </button>
+                  </li>
+                  <li >
+                    <Avatar color="inherit">
+                      <Link to="/settings">
+                        {userName && userName.slice(0, 1)}
+                      </Link>
+                    </Avatar>
+                  </li>
+                </>
+              )}
+
+              {showConfirmDialog && (
+                <ConfirmDialog
+                  message="Are you sure you want to log out?"
+                  onConfirm={handleConfirmLogout}
+                  onCancel={handleCancelLogout}
+                />
+              )}
+
             </div>
           </div>
           <div className={`menuIcon ${menuToggle ? "toggle" : ""}`} onClick={() => setMenuToggle(!menuToggle)}>
@@ -90,6 +157,7 @@ const Navbar = ({ toggleTheme }) => {
             <span className="icon icon-bars overlay"></span>
           </div>
         </div>
+
       </nav>
 
 
@@ -115,7 +183,7 @@ const Navbar = ({ toggleTheme }) => {
             <NavLink to="/contact">{translate.contact}</NavLink>
           </li>
           <li>
-            <NavLink to="/signin">{translate.signin}</NavLink>
+            <NavLink to="/login">{translate.signin}</NavLink>
           </li>
         </ul>
       </div>

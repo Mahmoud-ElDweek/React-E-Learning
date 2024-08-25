@@ -1,0 +1,11 @@
+
+ul.Aside li a{
+    padding: 12px 16px;
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+}
+ul.Aside li a.active{
+    background-color: #333;
+    color: white !important;
+}
