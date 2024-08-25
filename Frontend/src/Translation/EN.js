@@ -33,6 +33,15 @@ const EN = {
   regSentence: 'Dont have an account? Register here',
   logSentence: 'Already have an account? Login here',
   logout: "Logout",
+  Category: "Filter Courses By Category",
+  Schedule: "Learn on your schedule",
+  Choose:
+    "Choose from thousands of online courses with new additions published every month",
+  Explore: "Explore Courses",
+  FeaturedCourses: "Featured Courses",
+  StartLearning: "Start Learning Today",
+  Join: "Join millions of learners from around the world",
+  SignUp:"Sign Up Now"
 };
 
 
