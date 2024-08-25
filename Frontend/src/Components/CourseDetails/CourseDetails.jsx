@@ -22,13 +22,21 @@ export default function CourseDetails() {
   const [course, setCourse] = useState(null);
   const { id } = useParams();
   const translate = useSelector((state) => state.Localization.translation);
-  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl)
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
+
   useEffect(() => {
     axios
       .get(`${baseApiUrl}/${id}`)
       .then((res) => setCourse(res.data))
       .catch((err) => console.error("Error fetching course details:", err));
-  }, [id , baseApiUrl]);
+  }, [id, baseApiUrl]);
+
+  const handleBuyNow = () => {
+    if (course) {
+      localStorage.setItem("selectedCourse", JSON.stringify(course));
+      // Optionally, navigate to the settings page or show a success message
+    }
+  };
 
   if (!course) {
     return <Typography>Loading...</Typography>;
@@ -117,14 +125,7 @@ export default function CourseDetails() {
                 color="primary"
                 fullWidth
                 sx={{ mb: 2 }}
-              >
-                {translate.addToCart}
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                fullWidth
-                sx={{ mb: 2 }}
+                onClick={handleBuyNow}
               >
                 {translate.BuyNow}
               </Button>

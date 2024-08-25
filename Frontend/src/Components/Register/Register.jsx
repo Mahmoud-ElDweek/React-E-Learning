@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 export default function Register() {
-  const [userName, setUserName] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRePassword] = useState('');
   const [email, setEmail] = useState('');
@@ -19,9 +19,9 @@ export default function Register() {
   const IsValidate = () => {
             let isproceed = true;
             let errormessage = 'Please enter the value in ';
-            if (userName === null || userName === '') {
+            if (name === null || name === '') {
                 isproceed = false;
-                errormessage += ' Username';
+                errormessage += ' name';
             }
             if (password === null || password === '') {
                 isproceed = false;
@@ -43,13 +43,13 @@ export default function Register() {
                     isproceed = false;
                     toast.warning('Please enter the valid email')
                 }
-                else if (userName.length < 3) {
+                else if (name.length < 3) {
                     isproceed = false;
-                    toast.warning('Username must be at least 3 characters long');
+                    toast.warning('name must be at least 3 characters long');
                 } 
-                else if (/\s/.test(userName)) {
+                else if (/\s/.test(name)) {
                     isproceed = false;
-                    toast.warning('Username should not contain spaces');
+                    toast.warning('name should not contain spaces');
                 }
                 else if(password !== repassword){
                     isproceed = false;
@@ -67,7 +67,7 @@ export default function Register() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = { userName, password, repassword, email };
+    const data = { name, password, repassword, email };
 
     if (IsValidate()) {
     
@@ -91,13 +91,13 @@ export default function Register() {
         
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="userName" className="form-label">Username</label>
+            <label htmlFor="name" className="form-label">name</label>
             <input
             
               type="text"
-              id="userName"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="form-control"
             />
           </div>
