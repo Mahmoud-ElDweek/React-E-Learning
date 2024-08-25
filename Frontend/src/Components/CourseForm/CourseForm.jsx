@@ -1,66 +1,156 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { TextField, Button, Box } from '@mui/material';
+import { toast } from 'react-toastify';
+
+
 
 const CourseForm = () => {
+  const navigate = useNavigate();
 
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
-  console.log(baseApiUrl);
-  
   const { id } = useParams();
-  const [course, setCourse] = useState({ title: '', description: '' }); // Adjust fields as necessary
+  
+  const [course, setCourse] = useState({
+    title: '',
+    description: '',
+    instructorName: '',
+    subCategoryName: '',
+    image: ''
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (id) {
-      // Fetch the course details if an ID is present
       axios.get(`${baseApiUrl}/${id}`)
-        .then(response => setCourse(response.data))
-        .catch(error => console.error("Failed to fetch course", error));
+        .then(response => {
+          const fetchedCourse = response.data;
+          
+          setCourse({
+            title: fetchedCourse.title || '',
+            description: fetchedCourse.description || '',
+            instructorName: fetchedCourse.visible_instructors[0]?.display_name || '',
+            subCategoryName: fetchedCourse.primary_subcategory?.title || '',
+            image: fetchedCourse.image || ''
+          });
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error("Failed to fetch course", error);
+          setError("Failed to load course data.");
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
-  }, [id,baseApiUrl]);
+  }, [id, baseApiUrl]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCourse(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const courseData = {
+      ...course,
+      visible_instructors: [{ display_name: course.instructorName }],
+      primary_subcategory: { title: course.subCategoryName }
+    };
 
     if (id) {
-      // Update existing course
-      axios.put(`${baseApiUrl}/${id}`, course)
-        .then(response => {
+      axios.put(`${baseApiUrl}/${id}`, courseData)
+        .then(() => {
           console.log("Course updated successfully");
-          // Redirect or handle success
+          toast.success('Course updated successfully');
+          navigate(`/admin/courses`);
         })
         .catch(error => console.error("Failed to update course", error));
     } else {
-      // Create a new course
-      axios.post(`${baseApiUrl}`, course)
-        .then(response => {
+      axios.post(`${baseApiUrl}`, courseData)
+        .then(() => {
           console.log("Course created successfully");
-          // Redirect or handle success
+          toast.success('Course Created successfully');
+          navigate(`/admin/courses`);
+
         })
         .catch(error => console.error("Failed to create course", error));
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input
-          type="text"
-          value={course.title}
-          onChange={(e) => setCourse({ ...course, title: e.target.value })}
-        />
-      </label>
-      <label>
-        Description:
-        <textarea
-          value={course.description}
-          onChange={(e) => setCourse({ ...course, description: e.target.value })}
-        />
-      </label>
-      <button type="submit">{id ? 'Update Course' : 'Create Course'}</button>
-    </form>
+    <Box
+    component="form"
+    onSubmit={handleSubmit}
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      maxWidth: '500px',
+      margin: '0 auto'
+    }}
+  >
+    <TextField
+      label="Course Title"
+      name="title"
+      value={course.title}
+      onChange={handleChange}
+      required
+      fullWidth
+    />
+    <TextField
+      label="Description"
+      name="description"
+      value={course.description}
+      onChange={handleChange}
+      required
+      multiline
+      rows={7}
+      fullWidth
+    />
+    <TextField
+      label="Instructor Name"
+      name="instructorName"
+      value={course.instructorName}
+      onChange={handleChange}
+      required
+      fullWidth
+    />
+    <TextField
+      label="Sub-Category Name"
+      name="subCategoryName"
+      value={course.subCategoryName}
+      onChange={handleChange}
+      required
+      fullWidth
+    />
+    <TextField
+      label="Image URL"
+      name="image"
+      value={course.image}
+      onChange={handleChange}
+      required
+      fullWidth
+    />
+    <Button variant="contained" color="primary" type="submit">
+      {id ? 'Update Course' : 'Create Course'}
+    </Button>
+  </Box>
   );
 };
 

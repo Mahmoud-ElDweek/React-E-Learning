@@ -25,7 +25,7 @@ function Confirm({ open, handleClose, handleConfirm, courseName }) {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleConfirm} color="primary" autoFocus>
+        <Button onClick={handleConfirm} color="error" autoFocus>
           Delete
         </Button>
       </DialogActions>

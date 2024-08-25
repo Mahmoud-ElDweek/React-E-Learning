@@ -13,60 +13,57 @@ function CourseList() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   const [courses, setCourses] = useState([]);
+  const [displayedCourses, setDisplayedCourses] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // const [hasMore , setHasMore] = useState(true)  //flag
   const pageSize = 15;
   const translate = useSelector((state) => state.Localization.translation);
+
   useEffect(() => {
     axios
-      .get(`${baseApiUrl}?_page=${page}&_limit=${pageSize}`)
+      .get(`${baseApiUrl}`)
       .then((res) => {
         setCourses(res.data);
-        const totalCourses = parseInt(res.headers["x-total-count"], 10);
-        setTotalPages(Math.ceil(totalCourses / pageSize));
-
-        // setCourses(prevCourses =>  [...prevCourses , res.data]);
-        // setHasMore(res.data.length > 0)
+        setTotalPages(Math.ceil(res.data.length / pageSize));
       })
       .catch((err) => {
         console.error("Error ", err);
       });
-  }, [page, baseApiUrl]);
+  }, [baseApiUrl]);
+
+  useEffect(() => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    setDisplayedCourses(courses.slice(startIndex, endIndex));
+  }, [page, courses]);
 
   const handlePageChange = (event, page) => {
-    // console.log(page)
     setPage(page);
   };
-
-
 
   return (
     <div className="mycontainer">
       <Search />
-      {/* <Filtering /> */}
       <h4>{translate.coursesHeading}</h4>
       <Box>
         <Grid container spacing={2}>
-          {courses.map((x) => (
+          {displayedCourses.map((x) => (
             <Grid item key={x.id} xs={12} sm={6} md={4} lg={3}>
               <CardComponent
                 instPic={x.visible_instructors[0].image_50x50}
                 instName={x.visible_instructors[0].display_name}
-                // subheader="September 14, 2016"
                 media={x.image}
                 courseTitle={x.title}
                 content={stripHtmlTags(x.description)}
                 actions={[
                   {
-                    label: "add to favorites" ,  icon: <AddToWishList CourseID={x.id} />
+                    label: "add to favorites" , icon: <AddToWishList CourseID={x.id} />
                   },
                   { label: "share", icon: <ShareIcon color="info" /> },
                 ]}
                 CourseID={x.id}
               />
-
             </Grid>
           ))}
         </Grid>

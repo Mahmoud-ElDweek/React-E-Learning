@@ -87,7 +87,7 @@ CardComponent.propTypes = {
     content: PropTypes.string,
     actions: PropTypes.array,
     iconColor: PropTypes.string,
-    CourseID: PropTypes.number,
+    CourseID: PropTypes.string,
 };
 
 export default CardComponent;
