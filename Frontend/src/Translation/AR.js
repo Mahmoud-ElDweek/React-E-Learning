@@ -27,11 +27,14 @@ const AR = {
   userName:"اسم المستخدم",
   password:"كلمة المرور",
   confirmPassword:"تأكيد كلمة المرور",
-  register:"تسجيل",
-  ifYouHaveAccount:"اذا كان لديك حساب ؟ تسجيل الدخول من هنا",
   login:"تسجيل الدخول",
   show:"عرض",
-  donotHaveAccount:"اذا كنت غير مسجل بحساب ؟ عليك التسجيل من هنا"
+  donotHaveAccount:"اذا كنت غير مسجل بحساب ؟ عليك التسجيل من هنا",
+  hide: "إخفاء",
+  regSentence: 'ليس لديك حساب ؟ سجل حساب جديد من هنا',
+  logSentence: 'لديك حساب مسبقا ؟ سجل الدخول من هنا',
+  logout: "تسجيل الخروج",
+
 };
 
 export default AR;

@@ -60,7 +60,29 @@ const CoursesManagement = () => {
     deletingCourse()
   }
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+    const [courseToDelete, setCourseToDelete] = useState(null);
+    
+    const handleOpenDialog = (courseID) => {
+        setCourseToDelete(courseID);
+        setDialogOpen(true);
+    };
 
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+        setCourseToDelete(null);
+    };
+
+    const handleConfirmDelete = () => {
+        if (courseToDelete !== null) {
+            const coursesWished = JSON.parse(localStorage.getItem('wishlist')) || [];
+            const updatedWishList = coursesWished.filter(x => x !== courseToDelete);
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishList));
+            setCourses(courses.filter(course => course.id !== courseToDelete));
+            setCourseToDelete(null);
+        }
+        handleCloseDialog();
+    };
 
   return (
     <>
@@ -97,7 +119,14 @@ const CoursesManagement = () => {
             color="primary"
           />
         </Box>
+        <Confirm
+                open={dialogOpen}
+                handleClose={handleCloseDialog}
+                handleConfirm={handleConfirmDelete}
+                courseName={courses.find(course => course.id === courseToDelete)?.title || "Unknown Course"}
+            />
     </>
+    
   )
 }
 

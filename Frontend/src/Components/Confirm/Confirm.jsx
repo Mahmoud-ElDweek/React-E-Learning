@@ -6,6 +6,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
+// eslint-disable-next-line react/prop-types
 function Confirm({ open, handleClose, handleConfirm, courseName }) {
   return (
     <Dialog

@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useState } from 'react';
-import SignIn from './Pages/SignIn/SignIn';
 import Admin from './Pages/Admin/Admin';
 import Dashboard from './Pages/Admin/Dashboard/Dashboard';
 import CoursesManagement from './Pages/Admin/CoursesManagement/CoursesManagement';
@@ -21,6 +20,7 @@ import FooterBar from './Components/FooterBar/FooterBar';
 import CourseDetails from './Components/CourseDetails/CourseDetails';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import WishList from './Components/WishList/WishList';
 
 const lightTheme = createTheme({
   palette: {
@@ -30,7 +30,7 @@ const lightTheme = createTheme({
     },
     background: {
       bg: '#1976d2',
-      contentBG: "#eee",
+      contentBG: "#f5f5f5",
       navText: '#ffffff',
       contentText: '#000000'
     },
@@ -70,10 +70,12 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+
+  
   // Update the login state
   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -87,6 +89,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetails />} />
+              <Route path="/wishlist" element={<WishList />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login onLogin={handleLogin} />} />
               <Route path="/register" element={<Register />} />

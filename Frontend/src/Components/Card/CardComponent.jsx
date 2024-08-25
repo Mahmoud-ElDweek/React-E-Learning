@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-import { styled } from '@mui/material/styles';
+import React from 'react'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types'
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -50,8 +47,10 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                 )}
                 {(content || courseTitle) && (
                     <CardContent sx={{ cursor: "pointer", height: "110px" }}>
-                        <Typography color="primary" sx={{ fontWeight: "900" }}>
-                            {courseTitle}
+                        <Typography color="primary" sx={{ fontWeight: "900" ,lineHeight: 1.2, padding: "8px 0" }}>
+                            <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
+                                {courseTitle}
+                            </Link>
                         </Typography>
                         <Typography variant="body2" color="grey" sx={truncate}>
                             {content}

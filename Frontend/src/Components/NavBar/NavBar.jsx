@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './NavBar.css'
-import { Badge, Box, Button, colors, Fab } from '@mui/material'
+import { Avatar, Badge, Box, Button, colors, Fab } from '@mui/material'
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBaseApiUrl, setDirection, setLang } from "../../ReduxToolkit/Slices/Localization";
@@ -9,31 +9,48 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CloseIcon from '@mui/icons-material/Close';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ConfirmDialog from '../ConfirmDialog/ConfirmDialog' // Import the ConfirmDialog component
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog'
 
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
 
-//-------
-const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  //-------
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
-const handleLogoutClick = () => {
-  setShowConfirmDialog(true);
-};
+  const handleLogoutClick = () => {
+    setShowConfirmDialog(true);
+  };
 
-const handleConfirmLogout = () => {
-  setShowConfirmDialog(false);
-  sessionStorage.removeItem('isLoggedIn'); // Remove logged in status
-  handleLogout(); // Call the logout function passed as a prop
-};
+  const handleConfirmLogout = () => {
+    setShowConfirmDialog(false);
+    localStorage.clear() // Remove logged in status
+    handleLogout(); // Call the logout function passed as a prop
+  };
 
-const handleCancelLogout = () => {
-  setShowConfirmDialog(false);
-};
+  const handleCancelLogout = () => {
+    setShowConfirmDialog(false);
+  };
 
-//-------
 
+  const [userName, setUserName] = useState(() => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    return users.length ? users[users.length - 1].name : null;
+  })
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const exist = JSON.parse(localStorage.getItem('isLoggedIn')) || null;
+    const userExist = users.length ? users[users.length - 1].name : null;
+    if(exist)
+    setUserName(userExist);
+  }, []);
+
+
+  //-------
+
+  const favoriteCount = useSelector((state)=> state.wishListSlice.count);
+
+  
   const [menuToggle, setMenuToggle] = useState(false);
   const dispatch = useDispatch()
   const translate = useSelector((state) => state.Localization.translation);
@@ -97,42 +114,41 @@ const handleCancelLogout = () => {
               }
               <Link to="/wishlist" style={{ textDecoration: 'none', color: theme.palette.background.navText, width: "100%" }}>
                 <Fab size="small" sx={{ color: "inherit", backgroundColor: "inherit", ":hover": { backgroundColor: "#555" }, margin: "0 8px", boxShadow: "none" }}>
-                  <Badge badgeContent={5} color="error" max={9}>
+                  <Badge badgeContent={favoriteCount} color="error" max={9}>
                     <FavoriteIcon />
                   </Badge>
                 </Fab>
               </Link>
               {!isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">Register</Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <button className="btn btn-link nav-link" onClick={handleLogoutClick}>
-                    Logout
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/settings">
-                    Settings
-                  </Link>
-                </li>
-              </>
-            )}
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">{translate.login}</Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <button className="btn btn-link nav-link" onClick={handleLogoutClick}>
+                      {translate.logout}
+                    </button>
+                  </li>
+                  <li >
+                    <Avatar color="inherit">
+                      <Link to="/settings">
+                        {userName && userName.slice(0, 1)}
+                      </Link>
+                    </Avatar>
+                  </li>
+                </>
+              )}
 
-        {showConfirmDialog && (
-        <ConfirmDialog
-          message="Are you sure you want to log out?"
-          onConfirm={handleConfirmLogout}
-          onCancel={handleCancelLogout}
-        />
-      )}
+              {showConfirmDialog && (
+                <ConfirmDialog
+                  message="Are you sure you want to log out?"
+                  onConfirm={handleConfirmLogout}
+                  onCancel={handleCancelLogout}
+                />
+              )}
 
             </div>
           </div>
@@ -167,7 +183,7 @@ const handleCancelLogout = () => {
             <NavLink to="/contact">{translate.contact}</NavLink>
           </li>
           <li>
-            <NavLink to="/signin">{translate.signin}</NavLink>
+            <NavLink to="/login">{translate.signin}</NavLink>
           </li>
         </ul>
       </div>

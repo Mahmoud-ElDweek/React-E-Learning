@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import CardComponent from "../../Components/Card/CardComponent";
-import { Box, Grid, Button } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Box, Grid } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import Search from "../../Components/Search/Search";
 import { useSelector } from "react-redux";
-import Filtering from "../../Components/Filtering/FilteringByCategory";
- import { Link } from "react-router-dom";
 import { stripHtmlTags } from "../../util/HtmlCleaner";
+import AddToWishList from "../../Components/Heart-Icon/AddToWishList";
 
 function CourseList() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
-  
+
   const [courses, setCourses] = useState([]);
   const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // const [hasMore , setHasMore] = useState(true)  //flag
   const pageSize = 15;
@@ -28,23 +26,21 @@ function CourseList() {
         setCourses(res.data);
         const totalCourses = parseInt(res.headers["x-total-count"], 10);
         setTotalPages(Math.ceil(totalCourses / pageSize));
-        
+
         // setCourses(prevCourses =>  [...prevCourses , res.data]);
         // setHasMore(res.data.length > 0)
       })
       .catch((err) => {
         console.error("Error ", err);
       });
-  }, [page,baseApiUrl]);
+  }, [page, baseApiUrl]);
 
   const handlePageChange = (event, page) => {
     // console.log(page)
     setPage(page);
   };
 
-  const addToFavorite = () => {
-    
-  }
+
 
   return (
     <div className="mycontainer">
@@ -53,22 +49,24 @@ function CourseList() {
       <h4>{translate.coursesHeading}</h4>
       <Box>
         <Grid container spacing={2}>
-          {courses.map((course) => (
-            <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
+          {courses.map((x) => (
+            <Grid item key={x.id} xs={12} sm={6} md={4} lg={3}>
               <CardComponent
-                instPic={course.visible_instructors[0].image_50x50}
-                instName={course.visible_instructors[0].display_name}
+                instPic={x.visible_instructors[0].image_50x50}
+                instName={x.visible_instructors[0].display_name}
                 // subheader="September 14, 2016"
-                media={course.image}
-                courseTitle={course.title}
-                content={stripHtmlTags(course.description)}
+                media={x.image}
+                courseTitle={x.title}
+                content={stripHtmlTags(x.description)}
                 actions={[
-                  { label: "add to favorites", icon: <FavoriteIcon color="error" /> , handleFunction: addToFavorite },
+                  {
+                    label: "add to favorites" ,  icon: <AddToWishList CourseID={x.id} />
+                  },
                   { label: "share", icon: <ShareIcon color="info" /> },
                 ]}
-                CourseID={course.id}
+                CourseID={x.id}
               />
-              
+
             </Grid>
           ))}
         </Grid>

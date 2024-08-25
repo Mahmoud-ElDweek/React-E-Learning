@@ -26,11 +26,13 @@ const EN = {
   userName:"User Name",
   password:"Password",
   confirmPassword:"Confirm Password",
-  register:"Register",
-  ifYouHaveAccount:"if you have an account ? login here",
   login:"Login",
   show:"Show",
-  donotHaveAccount:"DO Not Have An Account? Register Here"
+  donotHaveAccount:"DO Not Have An Account? Register Here",
+  hide: "Hide",
+  regSentence: 'Dont have an account? Register here',
+  logSentence: 'Already have an account? Login here',
+  logout: "Logout",
 };
 
 

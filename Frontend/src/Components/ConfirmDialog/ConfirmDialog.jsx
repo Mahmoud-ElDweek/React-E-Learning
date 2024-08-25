@@ -1,6 +1,7 @@
 import React from 'react';
 import './ConfirmDialog.css'; // For styling the dialog
 
+// eslint-disable-next-line react/prop-types
 const ConfirmDialog = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="confirm-dialog-overlay">

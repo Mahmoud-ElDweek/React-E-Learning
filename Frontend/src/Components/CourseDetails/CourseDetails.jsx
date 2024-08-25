@@ -43,7 +43,7 @@ export default function CourseDetails() {
   return (
     <Container maxWidth="lg" sx={{ mt: 5 }}>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} className="order-2 order-lg-1">
           <Typography
             variant="h4"
             component="h1"
@@ -103,7 +103,7 @@ export default function CourseDetails() {
             ))}
           </Box>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} className="order-1 order-lg-2 my-3">
           <Card
             sx={{ position: "sticky", top: 20, boxShadow: 3, borderRadius: 2 }}
           >
