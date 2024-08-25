@@ -12,15 +12,9 @@ import {
   Divider,
   Grid,
   Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import CheckIcon from "@mui/icons-material/Check";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useSelector } from "react-redux";
 
 export default function CourseDetails() {
@@ -140,19 +134,6 @@ export default function CourseDetails() {
               >
                 {translate.dayMoneyBackGuarantee}
               </Typography>
-              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                {translate.thisCourseInclude}
-              </Typography>
-              <List dense>
-                <ListItem>
-                  <ListItemIcon>
-                    <PlayCircleOutlineIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={`${course.content_info_short} on-demand video`}
-                  />
-                </ListItem>
-              </List>
             </CardContent>
           </Card>
         </Grid>

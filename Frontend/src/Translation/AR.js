@@ -21,7 +21,16 @@ const AR = {
   addToCart: "اضافة الى السلة",
   BuyNow: "اشتري الان",
   dayMoneyBackGuarantee: "الاسترجاع خلال30 يوم",
-  thisCourseInclude:"هذا الكورس يتضمن"
+  thisCourseInclude: "هذا الكورس يتضمن",
+  Category: "تصفية الدورات بالنوع",
+  Schedule: "تعلم في الجدول الزمني الخاص بك",
+  Choose:
+    "اختر من بين آلاف الدورات التدريبية عبر الإنترنت مع الإضافات الجديدة التي يتم نشرها كل شهر ",
+  Explore: "استكشاف الدورات",
+  FeaturedCourses: "الدورات المميزة",
+  StartLearning: "ابدأ التعلم اليوم", 
+  Join: "انضم إلى ملايين المتعلمين من جميع أنحاء العالم سجل الآن", 
+  SignUp:"سجل الدخول الان"
 };
 
 export default AR;

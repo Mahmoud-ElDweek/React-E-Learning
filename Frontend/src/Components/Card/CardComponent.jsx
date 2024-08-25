@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
     }),
 }))
 
-const CardComponent = ({ instPic, instName, subheader, media,courseTitle ,content, actions }) => {
+const CardComponent = ({ instPic, instName, subheader, media, courseTitle, content, actions, price }) => {
 
     const [expanded, setExpanded] = useState(false);
 
@@ -57,11 +57,12 @@ const CardComponent = ({ instPic, instName, subheader, media,courseTitle ,conten
                     alt="Card media"
                 />
             )}
-            {(content || courseTitle) && (
+            {(content || courseTitle || price) && (
                 <CardContent sx={{cursor: "pointer", height: "80px"}}>
                     <Typography variant="body2" color="primary">
                         <h4>{courseTitle}</h4>
                         <p>{content}</p>
+                        {price && <p>Price: ${price}</p>}
                     </Typography>
                 </CardContent>
             )}
@@ -102,6 +103,7 @@ CardComponent.propTypes = {
     courseTitle: PropTypes.string,
     content: PropTypes.string,
     actions: PropTypes.node,
+    price: PropTypes.number,
 };
 
 export default CardComponent;

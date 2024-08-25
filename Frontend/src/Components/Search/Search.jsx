@@ -7,19 +7,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
 
-export default function CourseList() {
+export default function Search() {
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
   const translate = useSelector((state) => state.Localization.translation);
 
   useEffect(() => {
-    if (word) {
+    if (word.length > 0) {
       axios
-        .get(`http://localhost:3001/courses?title_like=${word}`)
+        .get(`http://localhost:3001/courses/query?${word}`)
         .then((res) => setCourses(res.data))
         .catch((err) => console.error(err));
     } else {
-      setCourses([]);
+      setCourses([]); 
     }
   }, [word]);
 
@@ -28,7 +28,12 @@ export default function CourseList() {
       <TextField
         label={translate.search}
         value={word}
-        onChange={(e) => setWord(e.target.value)}
+        onChange={(e) => {
+          setWord(e.target.value);
+          if (e.target.value.length === 0) {
+            setCourses([]);
+          }
+        }}
         variant="outlined"
         fullWidth
         margin="normal"
@@ -56,12 +61,14 @@ export default function CourseList() {
         }}
       />
       <Grid container spacing={2}>
-        {courses.map((course) => (
+        {courses.filter((course) => {
+          return word.toLowerCase() === '' ? course : course.title.toLowerCase().includes(word)
+        }).map((course) => (
           <Grid item key={course.id} xs={12} sm={12} md={6} lg={4}>
             <CardComponent
               instPic={course.visible_instructors[0].image_50x50}
               instName={course.visible_instructors[0].display_name}
-              // subheader="September 14, 2016"
+              
               media={course.image}
               courseTitle={course.title}
               // content   --> description
