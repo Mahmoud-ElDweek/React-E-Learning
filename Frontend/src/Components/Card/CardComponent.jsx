@@ -46,7 +46,7 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                     />
                 )}
                 {(content || courseTitle) && (
-                    <CardContent sx={{ cursor: "pointer", height: "110px" }}>
+                    <CardContent sx={{ cursor: "pointer", height: "120px" }}>
                         <Typography color="primary" sx={{ fontWeight: "900" ,lineHeight: 1.2, padding: "8px 0" }}>
                             <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
                                 {courseTitle}

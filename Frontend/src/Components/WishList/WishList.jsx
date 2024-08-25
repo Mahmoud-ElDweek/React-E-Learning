@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 import Confirm from '../Confirm/Confirm';
 
 const WishList = () => {
-    // const wishedData = localStorage.getItem('wishlist');
-    // const wishedCourses = JSON.parse(wishedData);
+    const favoriteCount = useSelector((state)=> state.wishListSlice.count);
+
     const [courses, setCourses] = useState([]);
     const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl)
     console.log(courses);
@@ -38,7 +38,7 @@ const WishList = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [courseToDelete, setCourseToDelete] = useState(null);
-    
+
     const handleOpenDialog = (courseID) => {
         setCourseToDelete(courseID);
         setDialogOpen(true);
