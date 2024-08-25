@@ -3,18 +3,19 @@ import axios from "axios";
 import { TextField, Grid, InputAdornment, Box, Typography, Slider } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CardComponent from "./../Card/CardComponent";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
+import AddToWishList from "../Heart-Icon/AddToWishList";
 
 const FilteringByPrice = () => {
   const [price, setPrice] = useState(0);
   const [courses, setCourses] = useState([]);
   const translate = useSelector((state) => state.Localization.translation);
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/courses")
+      .get(`${baseApiUrl}`)
       .then((response) => {
         setCourses(response.data);
       })
@@ -63,7 +64,7 @@ const FilteringByPrice = () => {
                   media={course.image}
                   courseTitle={course.title}
                   actions={[
-                    { label: "add to favorites", icon: <FavoriteIcon /> },
+                    { label: "add to favorites", icon: <AddToWishList CourseID={course.id} /> },
                     { label: "share", icon: <ShareIcon /> },
                   ]}
                 />

@@ -11,11 +11,10 @@ import { useSelector } from "react-redux";
 
 
 
-export default function CourseList() {
 
-  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
 export default function Search() {
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
   const translate = useSelector((state) => state.Localization.translation);
@@ -27,9 +26,9 @@ export default function Search() {
         .then((res) => setCourses(res.data))
         .catch((err) => console.error(err));
     } else {
-      setCourses([]); 
+      setCourses([]);
     }
-  }, [word,baseApiUrl]);
+  }, [word, baseApiUrl]);
 
   return (
     <Box sx={{ padding: "20px" }}>
@@ -76,7 +75,7 @@ export default function Search() {
             <CardComponent
               instPic={course.visible_instructors[0].image_50x50}
               instName={course.visible_instructors[0].display_name}
-              
+
               media={course.image}
               courseTitle={course.title}
               // content   --> description
