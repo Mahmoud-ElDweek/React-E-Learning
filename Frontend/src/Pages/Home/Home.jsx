@@ -8,14 +8,17 @@ import { useSelector } from 'react-redux';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import axios from 'axios';
+import AddToWishList from '../../Components/Heart-Icon/AddToWishList';
+import { useTheme } from '@emotion/react';
 
 export default function Home() {
   const translate = useSelector((state) => state.Localization.translation);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredCourses, setFeaturedCourses] = useState([]);
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/courses')
+    axios.get(`${baseApiUrl}`)
       .then(response => {
         const sortedCourses = response.data
           .sort((a, b) => b.rating - a.rating)
@@ -33,9 +36,11 @@ export default function Home() {
     setCurrentSlide((prev) => (prev - 1 + featuredCourses.length) % featuredCourses.length);
   };
 
+  const theme = useTheme();
+
   return (
     <Box>
-      <Box sx={{ bgcolor: 'primary.main', color: 'white', py: 8 }}>
+      <Box sx={{  color: 'white', py: 8 }} style={{ backgroundColor: theme.palette.background.bg, color: theme.palette.background.navText }}>
         <Container maxWidth="lg">
           <Typography variant="h2" component="h1" gutterBottom>
             {translate.Schedule}
@@ -77,7 +82,7 @@ export default function Home() {
                     courseTitle={course.title}
                     price={course.price_detail.amount}
                     actions={[
-                      { label: "add to favorites", icon: <FavoriteIcon /> },
+                      { label: "add to favorites", icon: <AddToWishList CourseID={course.id} /> },
                       { label: "share", icon: <ShareIcon /> },
                     ]}
                   />
@@ -88,7 +93,7 @@ export default function Home() {
         </Box>
       </Container>
 
-      <Box sx={{ bgcolor: 'secondary.main', color: 'white', py: 8, textAlign: 'center' }}>
+      <Box sx={{ bgcolor: 'grey', color: 'white', py: 8, textAlign: 'center' }}>
         <Container maxWidth="md">
           <Typography variant="h4" component="h2" gutterBottom>
             {translate.StartLearning}

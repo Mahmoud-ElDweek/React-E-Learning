@@ -47,7 +47,7 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                 )}
                 {(content || courseTitle) && (
                     <CardContent sx={{ cursor: "pointer", height: "120px" }}>
-                        <Typography color="primary" sx={{ fontWeight: "900" ,lineHeight: 1.2, padding: "8px 0" }}>
+                        <Typography color="primary" sx={{ fontWeight: "900", lineHeight: 1.2, padding: "8px 0" }}>
                             <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
                                 {courseTitle}
                             </Link>
@@ -64,15 +64,14 @@ const CardComponent = ({ instPic, instName, subheader, media, courseTitle, conte
                                 {action.icon}
                             </IconButton>
                         ))}
+                        {CourseID &&
+                                <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
+                                    <Button variant="contained" fullWidth>Learn More</Button>
+                                </Link>
+                         
+                        }
                     </CardActions>
                 )}
-                {CourseID &&
-                    <Box mt={1}>
-                        <Link to={`/courses/${CourseID}`} style={{ textDecoration: "none" }}>
-                            <Button variant="contained" fullWidth>Learn More</Button>
-                        </Link>
-                    </Box>
-                }
 
             </Card>
         </>
@@ -87,7 +86,7 @@ CardComponent.propTypes = {
     content: PropTypes.string,
     actions: PropTypes.array,
     iconColor: PropTypes.string,
-    CourseID: PropTypes.number,
+    CourseID: PropTypes.string,
 };
 
 export default CardComponent;

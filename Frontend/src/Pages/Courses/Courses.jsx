@@ -1,22 +1,29 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import CardComponent from "../../Components/Card/CardComponent";
-import { Box, Grid, Button, Typography } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import Search from "../../Components/Search/Search";
 import { useSelector } from "react-redux";
 import { stripHtmlTags } from "../../util/HtmlCleaner";
 import AddToWishList from "../../Components/Heart-Icon/AddToWishList";
-import { Link } from "react-router-dom";
 import FilteringByCategory from "./../../Components/FilteringByCategory/FilteringByCategory";
 import FilteringByPrice from "./../../Components/FilteringByPrice/FilteringByPrice";
+import { Link } from "react-router-dom";
+
+
+
+
+
+
 
 function CourseList() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   const [courses, setCourses] = useState([]);
+  const [displayedCourses, setDisplayedCourses] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -25,22 +32,25 @@ function CourseList() {
 
   useEffect(() => {
     axios
-      .get(`${baseApiUrl}?_page=${page}&_limit=${pageSize}`)
+      .get(`${baseApiUrl}`)
       .then((res) => {
         setCourses(res.data);
-        const totalCourses = parseInt(res.headers["x-total-count"], 10);
-        setTotalPages(Math.ceil(totalCourses / pageSize));
+        setTotalPages(Math.ceil(res.data.length / pageSize));
       })
       .catch((err) => {
         console.error("Error ", err);
       });
-  }, [page, baseApiUrl]);
+  }, [baseApiUrl]);
+
+  useEffect(() => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    setDisplayedCourses(courses.slice(startIndex, endIndex));
+  }, [page, courses]);
 
   const handlePageChange = (event, page) => {
     setPage(page);
   };
-
-
 
   return (
     <>
@@ -82,20 +92,44 @@ function CourseList() {
               </Grid>
             ))}
           </Grid>
-          <Box mt={4} display="flex" justifyContent="center">
-            <Pagination
-              count={totalPages}
-              page={page}
-              onChange={handlePageChange}
-              color="primary"
-            />
-          </Box>
+
         </Grid>
         <Grid item xs={12}>
           <FilteringByPrice />
         </Grid>
       </Grid>
-    </>
+      <h4>{translate.coursesHeading}</h4>
+      <Box>
+        <Grid container spacing={2}>
+          {displayedCourses.map((x) => (
+            <Grid item key={x.id} xs={12} sm={6} md={4} lg={3}>
+              <CardComponent
+                instPic={x.visible_instructors[0].image_50x50}
+                instName={x.visible_instructors[0].display_name}
+                media={x.image}
+                courseTitle={x.title}
+                content={stripHtmlTags(x.description)}
+                actions={[
+                  {
+                    label: "add to favorites", icon: <AddToWishList CourseID={x.id} />
+                  },
+                  { label: "share", icon: <ShareIcon color="info" /> },
+                ]}
+                CourseID={x.id}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <Box mt={5} mb={4} display="flex" justifyContent="center">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Box>
+      </Box>
+    </div>
   );
 }
 

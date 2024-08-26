@@ -33,17 +33,17 @@ const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
   };
 
 
-  const [userName, setUserName] = useState(() => {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    return users.length ? users[users.length - 1].name : null;
-  })
-  useEffect(() => {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const exist = JSON.parse(localStorage.getItem('isLoggedIn')) || null;
-    const userExist = users.length ? users[users.length - 1].name : null;
-    if(exist)
-    setUserName(userExist);
-  }, []);
+  // const [userName, setUserName] = useState(() => {
+  //   const users = JSON.parse(localStorage.getItem('users')) || [];
+  //   return users.length ? users[users.length - 1].name : null;
+  // })
+  // useEffect(() => {
+  //   const users = JSON.parse(localStorage.getItem('users')) || [];
+  //   const exist = JSON.parse(localStorage.getItem('isLoggedIn')) || null;
+  //   const userExist = users.length ? users[users.length - 1].name : null;
+  //   if(exist)
+  //   setUserName(userExist);
+  // }, []);
 
 
   //-------
@@ -72,7 +72,9 @@ const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
   const theme = useTheme();
   // console.log(theme.palette.mode);
 
-
+  const naming = localStorage.getItem("username")
+  console.log(naming);
+  
 
   return (
     <div className={menuToggle ? "nav-holder" : ""} style={{ backgroundColor: theme.palette.background.bg, color: theme.palette.background.navText }}>
@@ -119,13 +121,12 @@ const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
                   </Badge>
                 </Fab>
               </Link>
-              {!isLoggedIn ? (
                 <>
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">{translate.login}</Link>
                   </li>
                 </>
-              ) : (
+              {!isLoggedIn && (
                 <>
                   <li className="nav-item">
                     <button className="btn btn-link nav-link" onClick={handleLogoutClick}>
@@ -133,9 +134,9 @@ const Navbar = ({ toggleTheme, isLoggedIn, handleLogout }) => {
                     </button>
                   </li>
                   <li >
-                    <Avatar color="inherit">
+                    <Avatar color="inherit" sx={{margin: "0 8px"}}>
                       <Link to="/settings">
-                        {userName && userName.slice(0, 1)}
+                        {naming && naming.slice(0, 1)}
                       </Link>
                     </Avatar>
                   </li>

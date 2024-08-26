@@ -22,6 +22,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import WishList from './Components/WishList/WishList';
 import { ToastContainer } from 'react-toastify';
+import Settings from './Components/Settings/Settings';
 
 const lightTheme = createTheme({
   palette: {
@@ -89,6 +90,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/courses/:id" element={<CourseDetails />} />
               <Route path="/wishlist" element={<WishList />} />

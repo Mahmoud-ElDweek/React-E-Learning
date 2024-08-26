@@ -11,25 +11,26 @@ import {
   InputLabel,
 } from "@mui/material";
 import CardComponent from "../Card/CardComponent";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
+import AddToWishList from "../Heart-Icon/AddToWishList";
 
 const FilteringByCategory = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [subcategory, setSubcategory] = useState("");
   const translate = useSelector((state) => state.Localization.translation);
+  const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/courses/")
+      .get(`${baseApiUrl}`)
       .then((res) => {
         setCourses(res.data);
         setFilteredCourses(res.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [baseApiUrl]);
 
   useEffect(() => {
     if (subcategory) {
@@ -85,7 +86,7 @@ const FilteringByCategory = () => {
                   media={course.image}
                   courseTitle={course.title}
                   actions={[
-                    { label: "add to favorites", icon: <FavoriteIcon /> },
+                    { label: "add to favorites", icon: <AddToWishList CourseID={course.id} /> },
                     { label: "share", icon: <ShareIcon /> },
                   ]}
                 />

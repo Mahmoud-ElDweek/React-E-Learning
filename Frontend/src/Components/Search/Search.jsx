@@ -8,7 +8,12 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
   
 
-  export default function Search() {
+
+
+
+
+
+export default function Search() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
   const [word, setWord] = useState("");
   const [courses, setCourses] = useState([]);
@@ -21,9 +26,9 @@ import { useSelector } from "react-redux";
         .then((res) => setCourses(res.data))
         .catch((err) => console.error(err));
     } else {
-      setCourses([]); 
+      setCourses([]);
     }
-  }, [word,baseApiUrl]);
+  }, [word, baseApiUrl]);
 
   return (
     <Box sx={{ padding: "20px" }}>
@@ -70,7 +75,7 @@ import { useSelector } from "react-redux";
             <CardComponent
               instPic={course.visible_instructors[0].image_50x50}
               instName={course.visible_instructors[0].display_name}
-              
+
               media={course.image}
               courseTitle={course.title}
               // content   --> description
