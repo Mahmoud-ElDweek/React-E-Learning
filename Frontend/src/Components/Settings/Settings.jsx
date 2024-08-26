@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Box, Typography } from '@mui/material';
+import { stripHtmlTags } from './../../util/HtmlCleaner';
 
 const Settings = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
@@ -77,58 +78,69 @@ const Settings = () => {
  
 
   return (
-          <>
-    <div className="container">
-      <h2>Settings</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
+    <>
+      <div className="container">
+        <h2>Settings</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={user.name}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={user.email}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Update</button>
-      </form>
-    </div>
-    {selectedCourse &&
-    <Box>
-    <Typography variant="h4">Selected Course</Typography>
-    <Typography variant="h6">{selectedCourse.title}</Typography>
-    <Typography variant="body1">{selectedCourse.description}</Typography>
-    {/* Render more course details as needed */}
-  </Box>
-    }
-</>  
-);
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Update
+          </button>
+        </form>
+      </div>
+      {selectedCourse && (
+        <Box>
+          <Typography variant="h4">Selected Course</Typography>
+          <Typography variant="h6">{selectedCourse.title}</Typography>
+          <Typography variant="body1">
+            {stripHtmlTags(selectedCourse.description)}
+          </Typography>
+          {/* Render more course details as needed */}
+        </Box>
+      )}
+    </>
+  );
 };
 
 export default Settings;
+

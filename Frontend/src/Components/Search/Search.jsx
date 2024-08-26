@@ -8,11 +8,6 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useSelector } from "react-redux";
   
 
-
-
-
-
-
 export default function Search() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
   const [word, setWord] = useState("");

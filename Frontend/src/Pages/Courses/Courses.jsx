@@ -13,12 +13,6 @@ import FilteringByCategory from "./../../Components/FilteringByCategory/Filterin
 import FilteringByPrice from "./../../Components/FilteringByPrice/FilteringByPrice";
 import { Link } from "react-router-dom";
 
-
-
-
-
-
-
 function CourseList() {
   const baseApiUrl = useSelector((state) => state.Localization.baseApiUrl);
 
@@ -59,7 +53,7 @@ function CourseList() {
         <FilteringByCategory />
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12}>
           <Typography variant="h4" sx={{ mb: 2 }}>
             {translate.coursesHeading}
           </Typography>
@@ -129,7 +123,8 @@ function CourseList() {
           />
         </Box>
       </Box>
-    </div>
+
+      </>
   );
 }
 
